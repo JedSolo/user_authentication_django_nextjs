@@ -8,8 +8,9 @@ class CustomJWTAuthentication(JWTAuthentication):
 
             if header is None:
                 raw_token = request.COOKIES.get(settings.AUTH_COOKIE)
-
-            raw_token = self.get_raw_token(header)
+            else:
+                raw_token = self.get_raw_token(header)
+            
             if raw_token is None:
                 return None
             

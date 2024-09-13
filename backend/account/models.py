@@ -1,16 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-
+from django.conf import settings
 
 
 class UserAccountManager(BaseUserManager):
 
-    def create_user(self, name, email, phone, password=None):
+    def create_user(self, email, phone, name="New User", password=None):
         if not email:
             raise ValueError("User must have an email")
         
         if not phone:
             raise ValueError("User  must have a phone number")
+        
         
         email = self.normalize_email(email)
         email = email.lower()

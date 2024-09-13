@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     "corsheaders",
+    'social_django',
     "account",
 ]
 
@@ -126,6 +127,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#social OAuth
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
 #JWT
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -136,13 +145,12 @@ REST_FRAMEWORK = {
     )
 }
 
-
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-   "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-   "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-   "ROTATE_REFRESH_TOKENS": True,
-}
+# SIMPLE_JWT = {
+#    'AUTH_HEADER_TYPES': ('JWT',),
+#    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+#    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+#    "ROTATE_REFRESH_TOKENS": True,
+# }
 
 # Djoser Settings
 DJOSER = {
@@ -159,7 +167,8 @@ DJOSER = {
         'user_create': 'account.serializers.UserCreateSerializer',
         'user': 'account.serializers.UserCreateSerializer',
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
-    }
+    },
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': getenv('REDIRECT_URLS').split(',')
 }
 
 AUTH_COOKIE = 'access'
@@ -170,7 +179,28 @@ AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = '/'
 AUTH_COOKIE_SAMESITE = 'None'
 
-CORS_ALLOWED_ORIGINS = getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
+
+#Google OAuth
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = getenv('GOOGLE_AUTH_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = getenv('GOOGLE_AUTH_SECRET_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'openid'
+]
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
+
+#Facebook OAuth
+SOCIAL_AUTH_FACEBOOK_KEY = getenv('FACEBOOK_AUTH_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = getenv('FACEBOOK_AUTH_SECRET_KEY')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'email, first_name, last_name'
+}
+
+CORS_ALLOWED_ORIGINS = getenv('CORS_ALLOWED_ORIGINS',
+                              'http://localhost:3000,http://127.0.0.1:3000'
+                              ).split(',')
 CORS_ALLOW_CREDENTIALS = True
 
 # Internationalization
