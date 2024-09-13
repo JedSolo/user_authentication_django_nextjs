@@ -2,7 +2,7 @@
 # User Authentication System
 
 Building a User Authentication System using Django as Backend and NextJs as Frontend
-The Authentication include Google OAuth2 Authentication
+- The Authentication include Google OAuth2 Authentication
 
 
 ## Run Locally
