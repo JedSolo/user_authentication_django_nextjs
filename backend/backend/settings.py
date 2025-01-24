@@ -200,7 +200,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 CORS_ALLOWED_ORIGINS = getenv('CORS_ALLOWED_ORIGINS',
-                              'http://localhost:3000,http://127.0.0.1:3000'
+                              'http://localhost:3000,http://127.0.0.1:3000,http://172.20.10.5:3000'
                               ).split(',')
 CORS_ALLOW_CREDENTIALS = True
 
