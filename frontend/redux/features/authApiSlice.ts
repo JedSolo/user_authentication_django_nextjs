@@ -38,7 +38,7 @@ const authApiSlice = apiSlice.injectEndpoints({
                 body: { phone, password }
             }),
 
-            transformResponse: (response: {refresh: string, access: string}) => response.refresh
+            transformResponse: (response: {refresh: string, access: string}) => response
         }),
         register: builder.mutation({
             query: ({ phone, name, email, password, re_password }) => ({
@@ -58,7 +58,7 @@ const authApiSlice = apiSlice.injectEndpoints({
             query: ({}) => ({
                 url: '/logout/',
                 method: 'POST',
-            })
+            }),
         }),
         activation: builder.mutation({
             query: ({ uid, token }) => ({

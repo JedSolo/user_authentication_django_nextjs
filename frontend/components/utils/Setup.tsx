@@ -12,7 +12,7 @@ export default function Setup() {
     const [verify] = useVerifyMutation();
 
     useEffect(() => {
-        const token = localStorage.getItem("authToken"); // Retrieve token from localStorage
+        const token = localStorage.getItem("refresh"); // Retrieve token from localStorage
         if (token) {
             verify({ token })
                 .unwrap()
@@ -22,7 +22,7 @@ export default function Setup() {
                 .catch((error) => {
                     toast.error("Session expired, please log in again.");
                     console.error("Token verification failed:", error);
-                    localStorage.removeItem("authToken"); // save token to localStorage
+                    localStorage.removeItem("refresh");
                 })
                 .finally(() => {
                     dispatch(finishIntialLoad());

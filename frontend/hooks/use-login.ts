@@ -29,10 +29,11 @@ export default function useLogin() {
 
         login({ phone, password })
             .unwrap()
-            .then((response: string) => {
+            .then((response: {refresh: string, access: string}) => {
                 dispatch(setAuth());
                 toast.success('Logged in');
-                localStorage.setItem("authToken", response)
+                localStorage.setItem("refresh", response.refresh)
+                localStorage.setItem("access", response.refresh)
                 router.push('/dashboard');
             })
             .catch(() => {

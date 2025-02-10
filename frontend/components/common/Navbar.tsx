@@ -1,39 +1,75 @@
 'use client';
 
-import Link from 'next/link'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { logout as setLogout } from '@/redux/features/authSlice';
 import { useLogoutMutation } from '@/redux/features/authApiSlice';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { NavLink } from '@/components/common';
 
 export default function Example() {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const pathname = usePathname();
 
   const [logout] = useLogoutMutation();
 
   const { isAuthenticated } = useAppSelector(state => state.auth);
 
   const handleLogout = () => {
-    logout(undefined)
+    logout({})
       .unwrap()
       .then(() => {
         dispatch(setLogout());
+        localStorage.removeItem('access'); // Clear the access token
+        localStorage.removeItem('refresh'); // Clear the refresh token
+      })
+      .catch((error) => {
+        console.error('Logout failed:', error); // Log the error for debugging
+        alert('Logout failed. Please try again.'); // Show a user-friendly message
       })
       .finally(() => {
         router.push('/');
       })
-  }
+  };
 
-  const authLinks = (
-    <div>AUTH LINKS</div>
-  )
+  const isSelected = (path: string) => pathname === path ? true : false;
 
-  const guestLinks = (
-    <div>GUEST LINKS</div>
-  )
+  const authLinks = (isMobile: boolean) => (
+    <>
+      <NavLink 
+          isSelected={isSelected('/dashboard')}
+          isMobile={isMobile}
+          href='/dashboard'   
+      >
+        Dashboard
+      </NavLink>
+      <NavLink isMobile={isMobile} onClick={handleLogout}
+      >
+        Logout
+      </NavLink>
+    </>
+  );
+
+  const guestLinks = (isMobile: boolean) => (
+    <>
+      <NavLink 
+          isSelected={isSelected('/api/login')}
+          isMobile={isMobile}
+          href='/api/login'    
+      >
+        Login
+      </NavLink>
+      <NavLink
+          isSelected={isSelected('/api/register')}
+          isMobile={isMobile}
+          href='/api/register'   
+      >
+        Register
+      </NavLink>
+    </>
+  );
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -50,11 +86,11 @@ export default function Example() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-                <Link className='text-gray-300 rounded-md px-3 py-2 font-medium' href="/">Home</Link>
+                <NavLink href="/" isBanner>Home</NavLink>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                  {isAuthenticated ? authLinks : guestLinks}
+                  {isAuthenticated ? authLinks(false) : guestLinks(false)}
               </div>
             </div>
           </div>
@@ -63,7 +99,7 @@ export default function Example() {
 
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pb-3 pt-2">
-            {isAuthenticated ? authLinks : guestLinks}
+            {isAuthenticated ? authLinks(true) : guestLinks(true)}
         </div>
       </DisclosurePanel>
     </Disclosure>
