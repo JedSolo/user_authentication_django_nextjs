@@ -34,7 +34,7 @@ export default function Page(){
 
     if (isError) {
         return (
-            router.push('/api/login'),
+            router.push('/auth/login'),
             toast.error('Please log in')
         )
     };

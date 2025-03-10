@@ -1,3 +1,5 @@
+'use client';
+
 import { useLoginMutation } from "@/redux/features/authApiSlice";
 import { toast } from 'react-toastify';
 import { useAppDispatch } from "@/redux/hooks";

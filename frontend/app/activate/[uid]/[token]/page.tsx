@@ -23,7 +23,7 @@ export default function Page({ params }: { params: Promise<{uid: string; token: 
                 toast.error('Falied to activate account')
             })
             .finally(() => {
-                router.push('/api/login')
+                router.push('/auth/login')
             })
     }, []);
 

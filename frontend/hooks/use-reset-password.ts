@@ -1,3 +1,5 @@
+'use client';
+
 import { useResetPasswordMutation } from "@/redux/features/authApiSlice";
 import { toast } from 'react-toastify';
 import { useState, ChangeEvent, FormEvent } from "react";

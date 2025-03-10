@@ -1,3 +1,5 @@
+'use client';
+
 import { useResetPasswordConfirmMutation } from "@/redux/features/authApiSlice";
 import { toast } from 'react-toastify';
 import { useState, ChangeEvent, FormEvent } from "react";
@@ -28,7 +30,7 @@ export default function useResetPasswordConfirm(uid: string, token: string) {
                 .unwrap()
                 .then(() => {
                     toast.success('Password reset successful');
-                    router.push('/api/login');
+                    router.push('/auth/login');
                 })
                 .catch(() => {
                     toast.error('Password Reset Failed');

@@ -30,7 +30,7 @@ export default function Page(){
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Already have an account?{' '}
             <Link
-                href="/api/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                href="/auth/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
               Login Here
             </Link>
           </p>

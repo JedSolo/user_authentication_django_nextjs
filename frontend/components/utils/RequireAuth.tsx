@@ -17,7 +17,7 @@ export default function RequireAuth({ children }: Props) {
     useEffect(() => {
         if (!isLoading && !isAuthenticated) {
             toast.error('Must be logged in');
-            router.push('/api/login');
+            router.push('/auth/login');
         }
     }, [isLoading, isAuthenticated, router]);
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
@@ -25,7 +27,7 @@ export default function useSocialAuth(authenticate: any, provider: string) {
                 })
                 .catch(() => {
                     toast.error('Failed to Log in');
-                    router.push('/api/login');
+                    router.push('/auth/login');
                 });
         }
 

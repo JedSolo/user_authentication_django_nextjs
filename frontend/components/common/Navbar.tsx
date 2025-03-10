@@ -55,16 +55,16 @@ export default function Example() {
   const guestLinks = (isMobile: boolean) => (
     <>
       <NavLink 
-          isSelected={isSelected('/api/login')}
+          isSelected={isSelected('/auth/login')}
           isMobile={isMobile}
-          href='/api/login'    
+          href='/auth/login'    
       >
         Login
       </NavLink>
       <NavLink
-          isSelected={isSelected('/api/register')}
+          isSelected={isSelected('/auth/register')}
           isMobile={isMobile}
-          href='/api/register'   
+          href='/auth/register'   
       >
         Register
       </NavLink>
