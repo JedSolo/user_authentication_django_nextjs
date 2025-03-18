@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 import { Spinner } from "@/components/common";
-import { toast } from "react-toastify";
 
 interface Props {
     children: React.ReactNode;
@@ -16,7 +15,6 @@ export default function RequireAuth({ children }: Props) {
 
     useEffect(() => {
         if (!isLoading && !isAuthenticated) {
-            toast.error('Must be logged in');
             router.push('/auth/login');
         }
     }, [isLoading, isAuthenticated, router]);

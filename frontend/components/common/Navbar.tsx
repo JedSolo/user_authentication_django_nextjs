@@ -5,12 +5,11 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { logout as setLogout } from '@/redux/features/authSlice';
 import { useLogoutMutation } from '@/redux/features/authApiSlice';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { NavLink } from '@/components/common';
 
 export default function Example() {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const pathname = usePathname();
 
   const [logout] = useLogoutMutation();
@@ -28,10 +27,7 @@ export default function Example() {
       .catch((error) => {
         console.error('Logout failed:', error); // Log the error for debugging
         alert('Logout failed. Please try again.'); // Show a user-friendly message
-      })
-      .finally(() => {
-        router.push('/');
-      })
+      });
   };
 
   const isSelected = (path: string) => pathname === path ? true : false;
