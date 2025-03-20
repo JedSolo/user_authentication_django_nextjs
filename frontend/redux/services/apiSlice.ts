@@ -38,7 +38,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
                         extraOptions
                     );
                     if (refreshResult.data) {
-                        localStorage.setItem('access', refreshResult.data.access);
+                        localStorage.setItem('access', (refreshResult.data as { access: string }).access);
                         api.dispatch(setAuth());
                         result = await baseQuery(args, api, extraOptions);
                     } else {

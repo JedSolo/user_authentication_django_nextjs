@@ -1,13 +1,10 @@
 'use client';
 
-import { useRouter } from "next/navigation";
 import { useRetrieverUserQuery } from "@/redux/features/authApiSlice";
 import { List, Spinner } from "@/components/common";
-import { toast } from "react-toastify";
 
 export default function Page(){
-    const router = useRouter();
-    const { data: user, isLoading, isError } = useRetrieverUserQuery();
+    const { data: user, isLoading, isFetching } = useRetrieverUserQuery();
 
     const config = [
         {
@@ -24,18 +21,11 @@ export default function Page(){
         }
     ];
 
-    if (isLoading) {
+    if (isLoading || isFetching) {
         return (
             <div className="flex justify-center my-8">
                 <Spinner lg />
             </div>
-        )
-    };
-
-    if (isError) {
-        return (
-            router.push('/auth/login'),
-            toast.error('Please log in')
         )
     };
 

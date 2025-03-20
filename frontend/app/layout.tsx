@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import Provider from "@/redux/provider";
 import { Footer, Navbar } from "@/components/common";
 import { Setup } from "@/components/utils";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({
           <Setup />
           <Navbar />
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 my-8">
-            {children}
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
+            </Suspense>
           </div>
           <Footer />
         </Provider>
